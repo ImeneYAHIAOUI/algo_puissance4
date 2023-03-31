@@ -26,11 +26,8 @@ class AI {
     }
 
     nextMove(lastMove) {
-        //console.log("lastMove : ", lastMove);
-        //console.log("Before Human update : ", this.grid);
         this.startTimer = Date.now();
         if (JSON.stringify(lastMove) === JSON.stringify([])) {
-            console.log("first if")
             this.grid[height-1][3] = this.player;
             return [3, 0];
         } else {
@@ -38,20 +35,15 @@ class AI {
             // need to convert the coordinates to the ai coordinates
             this.grid[height - 1 - lastMove[1]][lastMove[0]] = this.otherPlayer;
 
-            //console.log("After Human update : ", this.grid);
-
             // make play the AI
             let bestMove = this.minMaxInit(4);
-            //console.log("res of minMaxInit : ", bestMove);
 
             // update the grid with the AI move
             this.grid[bestMove[1]][bestMove[0]] = this.player;
 
             // need to convert the coordinates to the api coordinates
             bestMove = [bestMove[0], height - 1 - bestMove[1]];
-            //console.log("move play by AI : ", bestMove);
 
-            //console.log("After AI update : ", this.grid);
             return bestMove;
         }
     }
@@ -63,9 +55,8 @@ class AI {
         let maxEval = Number.NEGATIVE_INFINITY;
         let bestMove = null;
         // for each possible move
-        //console.log("possible moves : ", moves);
         for (let move of GridMoves.possibleMoves(this.grid)) {
-            if (Date.now() - this.startTimer < 75) {
+            if (Date.now() - this.startTimer < 1900) { // un peu moins de 2 secondes
                 // make a shadow copy of the grid
                 let newGrid = this.grid.map(row => row.slice());
                 newGrid[move[1]][move[0]] = this.player;
@@ -81,7 +72,6 @@ class AI {
                 }
             }
         }
-        //console.log("maxEval : ", maxEval);
         return bestMove;
     }
 
@@ -108,7 +98,6 @@ class AI {
             let maxEval = Number.NEGATIVE_INFINITY;
             // for each possible move
             for (let move of GridMoves.possibleMoves(grid)) {
-                //console.log(move);
                 // make a shadow copy of the grid
                 let newGrid = grid.map(row => row.slice());
                 newGrid[move[1]][move[0]] = this.player;
