@@ -472,7 +472,9 @@ function gridToString(grid) {
     }
     return stringGrid;
 }
-
+module.exports = {
+    stringToGrid
+};
 
 
 
