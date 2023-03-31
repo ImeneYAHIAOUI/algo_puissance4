@@ -458,4 +458,32 @@ function printGrid(grid) {
     console.log();
 }
 
-export {nextMove, setup, AI}
+function stringToGrid(stringGrid) {
+    const grid = [];
+    for (let i = 0; i < width; i++) {
+        for ( let j = 0; j < height; j++) {
+           if (!grid[j]) {
+               grid[j] = [];
+           }
+              grid[j][i] = stringGrid[i * height + j];
+        }
+
+    }
+    return grid;
+}
+
+function gridToString(grid) {
+    let stringGrid = "";
+    for (let i = 0; i < width ; i++)
+    {
+        for (let j = 0; j < height; j++)
+        {
+            stringGrid += grid[j][i];
+        }
+    }
+    return stringGrid;
+}
+
+
+
+
