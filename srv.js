@@ -1,6 +1,6 @@
 const express = require('express');
 const { stringToGrid, setup, nextMove } = require('./minMaxAi');
-
+const GridChecker = require('./GridChecker');
 const app = express();
 const port = 3000;
 

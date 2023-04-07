@@ -457,9 +457,12 @@ function stringToGrid(stringGrid) {
            }
               grid[j][i] = stringGrid[i * height + j];
         }
-
     }
-    return grid;
+    const invertedGrid = [];
+    for (let i = 0; i < height; i++) {
+        invertedGrid[i] = grid[height - i - 1];
+    }
+    return invertedGrid;
 }
 
 function gridToString(grid) {
@@ -476,7 +479,7 @@ function gridToString(grid) {
 module.exports = {
     stringToGrid,
     nextMove,
-    setup
+    setup,
 };
 
 

@@ -74,3 +74,5 @@ function GridChecker(grid) {
         return true;
     }
 }
+
+module.exports = GridChecker;
