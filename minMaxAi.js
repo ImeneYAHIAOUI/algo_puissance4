@@ -27,12 +27,16 @@ class AI {
 
     nextMove(lastGrid) {
         this.startTimer = Date.now();
-        if ( lastGrid === [["0","0","0","0","0","0","0"],["0","0","0","0","0","0","0"],["0","0","0","0","0","0","0"],["0","0","0","0","0","0","0"],["0","0","0","0","0","0","0"],["0","0","0","0","0","0","0"]] ) {
+        if (lastGrid === [["0", "0", "0", "0", "0", "0", "0"], ["0", "0", "0", "0", "0", "0", "0"], ["0", "0", "0", "0", "0", "0", "0"], ["0", "0", "0", "0", "0", "0", "0"], ["0", "0", "0", "0", "0", "0", "0"], ["0", "0", "0", "0", "0", "0", "0"]]) {
             return [3, 0];
         } else {
-            // update the grid with the last move
-            // need to convert the coordinates to the ai coordinates
             this.grid = lastGrid;
+            for (let column = 0; column<width; column++){
+                for (let row = 0; row < height; row++){
+                    if(GridChecker.isGameOver(this.grid, row, column, "h"))
+                        return;
+                }
+            }
 
             // make play the AI
             let bestMove = this.minMaxInit(6);
@@ -208,30 +212,6 @@ class AI {
                 }
             }
         }
-        /*else {
-            for (let i = 0; i < knownWinningMoves1.length; i++) {
-                for (let j = 0; j < knownWinningMoves1[i].length; j++) {
-                    let index = lineOfConnect4.indexOf(knownWinningMoves1[i][j]);
-                    if (lineOfConnect4.indexOf("1111") !== -1) {
-                        score -= 100000;
-                    }
-                    if (index !== -1) {
-                        score -= 1 ** (i + 1);
-                    }
-                }
-            }
-            for (let i = 0; i < knownWinningMoves2.length; i++) {
-                for (let j = 0; j < knownWinningMoves2[i].length; j++) {
-                    let index = lineOfConnect4.indexOf(knownWinningMoves2[i][j]);
-                    if (lineOfConnect4.indexOf("2222") !== -1) {
-                        score += 100;
-                    }
-                    if (index !== -1) {
-                        score += 1 * (i + 1);
-                    }
-                }
-            }
-        }*/
         return score;
     }
 
@@ -267,32 +247,6 @@ class AI {
             }
         }
 
-        /*
-        // Not working well
-        let weightGrid = [
-            [2, 3, 4, 5, 4, 3, 2],
-            [3, 4, 5, 6, 5, 4, 3],
-            [4, 5, 6, 7, 6, 5, 4],
-            [5, 6, 7, 8, 7, 6, 5],
-            [4, 5, 6, 7, 6, 5, 4],
-            [3, 4, 5, 6, 5, 4, 3],
-            [2, 3, 4, 5, 4, 3, 2]
-        ];
-
-        for (let i = 0; i < grid.length; i++) {
-            for (let j = 0; j < grid[i].length; j++) {
-                if (grid[i][j] === this.player) {
-                    score += weightGrid[i][j];
-                } else if (grid[i][j] === this.otherPlayer) {
-                    score -= weightGrid[i][j] * 5;
-                }
-            }
-        }*/
-        /*console.log("printGrids >>>>>>>>>>>>>>>>>>>>>>>>>>");
-        for (let i = 0; i < grids.length; i++) {
-            printGrid(grids[i])
-        }
-*/
         return score;
     }
 
@@ -433,8 +387,10 @@ class GridChecker {
             case GridChecker.checkHorizontal(grid, row, column, color):
             case GridChecker.checkVertical(grid, row, column, color):
             case GridChecker.checkDiagonalBottomLeftTopRight(grid, row, column, color):
-            case GridChecker.checkDiagonalTopRightBottomLeft(grid, row, column, color):
+            case GridChecker.checkDiagonalTopRightBottomLeft(grid, row, column, color): {
+                console.log("over")
                 return GridChecker.win;
+            }
             default:
                 return GridChecker.notOver;
         }
@@ -451,11 +407,11 @@ function printGrid(grid) {
 function stringToGrid(stringGrid) {
     const grid = [];
     for (let i = 0; i < width; i++) {
-        for ( let j = 0; j < height; j++) {
-           if (!grid[j]) {
-               grid[j] = [];
-           }
-              grid[j][i] = stringGrid[i * height + j];
+        for (let j = 0; j < height; j++) {
+            if (!grid[j]) {
+                grid[j] = [];
+            }
+            grid[j][i] = stringGrid[i * height + j];
         }
     }
     const invertedGrid = [];
@@ -467,19 +423,19 @@ function stringToGrid(stringGrid) {
 
 function gridToString(grid) {
     let stringGrid = "";
-    for (let i = 0; i < width ; i++)
-    {
-        for (let j = 0; j < height; j++)
-        {
+    for (let i = 0; i < width; i++) {
+        for (let j = 0; j < height; j++) {
             stringGrid += grid[j][i];
         }
     }
     return stringGrid;
 }
+
 module.exports = {
     stringToGrid,
     nextMove,
     setup,
+
 };
 
 
