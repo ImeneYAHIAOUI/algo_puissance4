@@ -35,17 +35,18 @@ class AI {
             this.grid = lastGrid;
 
             // make play the AI
-            let bestMove = this.minMaxInit(4);
+            let bestMove = this.minMaxInit(6);
 
 
             // need to convert the coordinates to the api coordinates
-            bestMove = [bestMove[0], height - 1 - bestMove[1]];
+            //bestMove = [bestMove[0], height - 1 - bestMove[1]];
 
-            return bestMove;
+            return bestMove[0] + 1;
         }
     }
 
     minMaxInit(depth) {
+        console.log("here");
         let alpha = Number.NEGATIVE_INFINITY;
         let beta = Number.POSITIVE_INFINITY;
 
@@ -167,24 +168,27 @@ class AI {
 
     findWinningMovesOnALine(lineOfConnect4, isAiPlayingFirst) {
         let knownWinningMoves1 = [
-            ["1000", "0100", "0010", "0001"],
-            ["1100", "0110", "0011", "1010", "0101", "1001"],
-            ["0111", "1011", "1101", "1110"],
+            ["m000", "0m00", "00m0", "000m"],
+            ["mm00", "0mm0", "00mm", "m0m0", "0m0m", "m00m"],
+            ["0mmm", "m0mm", "mm0m", "mmm0"],
             //["1111"]
         ];
         let knownWinningMoves2 = [
-            ["2000", "0200", "0020", "0002"],
-            ["2200", "0220", "0022", "2020", "0202", "2002"],
-            ["0222", "2022", "2202", "2220"],
+            ["h000", "0h00", "00h0", "000h"],
+            ["hh00", "0hh0", "00hh", "h0h0", "0h0h", "h00h"],
+            ["0hhh", "h0hh", "hh0h", "hhh0"],
             //["2222"]
         ];
         let score = 0;
 
         if (isAiPlayingFirst) {
+            console.log("in If")
             for (let i = 0; i < knownWinningMoves2.length; i++) {
+                console.log("in for")
                 for (let j = 0; j < knownWinningMoves2[i].length; j++) {
+                    console.log("in 2 for")
                     let index = lineOfConnect4.indexOf(knownWinningMoves2[i][j]);
-                    if (lineOfConnect4.indexOf("2222") !== -1) {
+                    if (lineOfConnect4.indexOf("hhhh") !== -1) {
                         score -= 100000;
                     }
                     if (index !== -1) {
@@ -195,7 +199,7 @@ class AI {
             for (let i = 0; i < knownWinningMoves1.length; i++) {
                 for (let j = 0; j < knownWinningMoves1[i].length; j++) {
                     let index = lineOfConnect4.indexOf(knownWinningMoves1[i][j]);
-                    if (lineOfConnect4.indexOf("1111") !== -1) {
+                    if (lineOfConnect4.indexOf("mmmm") !== -1) {
                         score += 100;
                     }
                     if (index !== -1) {
@@ -204,7 +208,7 @@ class AI {
                 }
             }
         }
-        else {
+        /*else {
             for (let i = 0; i < knownWinningMoves1.length; i++) {
                 for (let j = 0; j < knownWinningMoves1[i].length; j++) {
                     let index = lineOfConnect4.indexOf(knownWinningMoves1[i][j]);
@@ -227,7 +231,7 @@ class AI {
                     }
                 }
             }
-        }
+        }*/
         return score;
     }
 
@@ -330,7 +334,7 @@ class GridMoves {
                 }
             }
         }
-        //console.log("Res possibles moves ", moves);
+        console.log("Res possibles moves ", moves);
         return moves;
     }
 }
