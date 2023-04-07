@@ -25,21 +25,18 @@ class AI {
         return true;
     }
 
-    nextMove(lastMove) {
+    nextMove(lastGrid) {
         this.startTimer = Date.now();
-        if (JSON.stringify(lastMove) === JSON.stringify([])) {
-            this.grid[height-1][3] = this.player;
+        if ( ! lastGrid.contains('h') && ! lastGrid.contains('m')) {
             return [3, 0];
         } else {
             // update the grid with the last move
             // need to convert the coordinates to the ai coordinates
-            this.grid[height - 1 - lastMove[1]][lastMove[0]] = this.otherPlayer;
+            this.grid = lastGrid;
 
             // make play the AI
             let bestMove = this.minMaxInit(4);
 
-            // update the grid with the AI move
-            this.grid[bestMove[1]][bestMove[0]] = this.player;
 
             // need to convert the coordinates to the api coordinates
             bestMove = [bestMove[0], height - 1 - bestMove[1]];
@@ -473,7 +470,9 @@ function gridToString(grid) {
     return stringGrid;
 }
 module.exports = {
-    stringToGrid
+    stringToGrid,
+    nextMove,
+    setup
 };
 
 
