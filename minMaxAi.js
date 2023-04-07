@@ -8,8 +8,8 @@ function setup(AIplays) {
     ai.setup(AIplays);
 }
 
-function nextMove(lastMove) {
-    return ai.nextMove(lastMove);
+function nextMove(lastGrid) {
+    return ai.nextMove(lastGrid);
 }
 
 class AI {
@@ -27,7 +27,7 @@ class AI {
 
     nextMove(lastGrid) {
         this.startTimer = Date.now();
-        if ( ! lastGrid.contains('h') && ! lastGrid.contains('m')) {
+        if ( lastGrid === [[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]] ) {
             return [3, 0];
         } else {
             // update the grid with the last move

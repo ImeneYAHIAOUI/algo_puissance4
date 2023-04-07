@@ -6,9 +6,9 @@ const port = 3000;
 
 app.get('/', (req, res) => {
   res.send('Bienvenue sur mon API REST !');
-  setup(1);
 });
 app.get('/move', (req, res) => {
+  setup(1);
   const boardContent = req.query.b;
   const board = stringToGrid(boardContent);
   const move = nextMove(board);
