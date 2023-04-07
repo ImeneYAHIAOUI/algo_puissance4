@@ -302,7 +302,7 @@ class GridMoves {
         // Check middle column
 
         for (let row = height - 1; row >= 0; row--) {
-            if (grid[row][middle] === 0) {
+            if (grid[row][middle] === "0") {
                 //console.log("row middle ", row);
                 moves.push([middle, row]);
                 break;
@@ -316,7 +316,7 @@ class GridMoves {
             const right = middle + i;
 
             for (let row = height - 1; row >= 0; row--) {
-                if (grid[row][left] === 0) {
+                if (grid[row][left] === "0") {
                     moves.push([left, row]);
                     break;
                 }
@@ -324,7 +324,7 @@ class GridMoves {
 
 
             for (let row = height - 1; row >= 0; row--) {
-                if (grid[row][right] === 0) {
+                if (grid[row][right] === "0") {
                     moves.push([right, row]);
                     break;
                 }
