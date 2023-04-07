@@ -31,10 +31,11 @@ class AI {
             return [3, 0];
         } else {
             this.grid = lastGrid;
-            for (let column = 0; column<width; column++){
-                for (let row = 0; row < height; row++){
-                    if(GridChecker.isGameOver(this.grid, row, column, "h"))
+            for (let column = 0; column < width; column++) {
+                for (let row = 0; row < height; row++) {
+                    if (GridChecker.isGameOver(this.grid, row, column, "h")) {
                         return;
+                    }
                 }
             }
 
@@ -295,10 +296,6 @@ class GridMoves {
 
 class GridChecker {
 
-    static win = 0b10; //2
-    static draw = 0b01; //1
-    static notOver = 0b00; //0
-
     static checkHorizontal(grid, row, column, color) {
         let count = 0;
         const rowArray = grid[row];
@@ -380,7 +377,7 @@ class GridChecker {
 
     static isGameOver(grid, row, column, color) {
         if (GridChecker.checkDraw(grid)) {
-            return GridChecker.draw;
+            return true;
         }
         // switch case is faster than if else
         switch (true) {
@@ -389,10 +386,10 @@ class GridChecker {
             case GridChecker.checkDiagonalBottomLeftTopRight(grid, row, column, color):
             case GridChecker.checkDiagonalTopRightBottomLeft(grid, row, column, color): {
                 console.log("over")
-                return GridChecker.win;
+                return true;
             }
             default:
-                return GridChecker.notOver;
+                return false;
         }
     }
 }
