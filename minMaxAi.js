@@ -43,6 +43,9 @@ class AI {
                         return "Draw";
                     }
                 }
+                /*if(numberAiMoves + 1 !== numberHumanMoves) {
+                    return "Invalid token number";
+                }*/
             }
 
             // make play the AI
@@ -285,7 +288,6 @@ class GridChecker {
         const rowArray = grid[row];
         const left = Math.max(column - 3, 0);
         const right = Math.min(column + 3, width - 1);
-
         for (let i = left; i <= right; i++) {
             if (rowArray[i] === color) {
                 count++;
@@ -382,8 +384,10 @@ function printGrid(grid) {
 }
 
 function stringToGrid(stringGrid) {
+    let numberAiMoves = 0;
+    let numberHumanMoves = 0;
     if(stringGrid.length !== 42){
-        return [];
+        return "Invalid board size";
     }
     const grid = [];
     for (let i = 0; i < width; i++) {
@@ -391,8 +395,21 @@ function stringToGrid(stringGrid) {
             if (!grid[j]) {
                 grid[j] = [];
             }
-            grid[j][i] = stringGrid[i * height + j];
+            let char = stringGrid[i * height + j];
+            if(char !== "0" && char !== "m" && char !== "h"){
+                return "Invalid character";
+            }
+            if(char === "m"){
+                numberAiMoves++;
+            }
+            if(char === "h"){
+                numberHumanMoves++;
+            }
+            grid[j][i] = char;
         }
+    }
+    if(numberAiMoves + 1 !== numberHumanMoves){
+        return "Invalid Number of moves";
     }
     const invertedGrid = [];
     for (let i = 0; i < height; i++) {

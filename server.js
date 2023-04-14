@@ -10,13 +10,22 @@ app.get('/', (req, res) => {
 app.get('/move', (req, res) => {
     const boardContent = req.query.b;
     const board = stringToGrid(boardContent);
-    if (board.length === 0) {
-        res.status(400).json({"detail": "Invalid board size"});
-        return;
-    }
     if (chipInTheAir(board)) {
         res.status(400).json({"detail": "A chip is in the air"});
         return;
+    }
+    switch (board) {
+        case "Invalid Number of moves":
+            res.status(400).json({"detail": "Invalid number of moves"});
+            return;
+        case "Invalid board size":
+            res.status(400).json({"detail": "Invalid board size"});
+            return;
+        case "Invalid character":
+            res.status(400).json({"detail": "Invalid character"});
+            return;
+        default:
+            break;
     }
     setup(1);
     const move = nextMove(board);
