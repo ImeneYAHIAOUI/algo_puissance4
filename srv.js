@@ -22,6 +22,14 @@ app.get('/move', (req, res) => {
         let response = {"row": move};
         res.status(200).json(response);
     }
+    setup(1);
+    const move = nextMove(board);
+    if (move === "Game is over") {
+        res.status(422).json({ "detail" : "Grid is full" });
+    }
+    else {
+        res.status(200).json({"row": move});
+    }
 });
 
 app.listen(port, () => {
