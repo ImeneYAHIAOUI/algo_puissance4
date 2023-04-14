@@ -36,6 +36,9 @@ class AI {
                     if (GridChecker.isGameOver(this.grid, row, column, "h")) {
                         return "Game is over";
                     }
+                    if (GridChecker.isGameOver(this.grid, row, column, "m")) {
+                        return;
+                    }
                 }
             }
 
@@ -379,6 +382,9 @@ function printGrid(grid) {
 }
 
 function stringToGrid(stringGrid) {
+    if(stringGrid.length !== 42){
+        return [];
+    }
     const grid = [];
     for (let i = 0; i < width; i++) {
         for (let j = 0; j < height; j++) {
