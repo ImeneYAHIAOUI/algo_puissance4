@@ -15,8 +15,6 @@ function nextMove(lastGrid) {
 class AI {
 
     setup(AIplays) {
-        // need to initialize the grid
-        // need to transform it later to improve performance
         this.player = AIplays;
         this.otherPlayer = AIplays === 1 ? 2 : 1;
 
@@ -27,36 +25,26 @@ class AI {
 
     nextMove(lastGrid) {
         this.startTimer = Date.now();
-        if (lastGrid === [["0", "0", "0", "0", "0", "0", "0"], ["0", "0", "0", "0", "0", "0", "0"], ["0", "0", "0", "0", "0", "0", "0"], ["0", "0", "0", "0", "0", "0", "0"], ["0", "0", "0", "0", "0", "0", "0"], ["0", "0", "0", "0", "0", "0", "0"]]) {
-            return [3, 0];
-        } else {
-            this.grid = lastGrid;
-            for (let column = 0; column < width; column++) {
-                for (let row = 0; row < height; row++) {
-                    if (GridChecker.isGameOver(this.grid, row, column, "h")) {
-                        return "Human wins";
-                    }
-                    if (GridChecker.isGameOver(this.grid, row, column, "m")) {
-                        return "Machine wins";
-                    }
-                    if (GridChecker.checkDraw(this.grid)) {
-                        return "Draw";
-                    }
-                    if (row < height-1 && this.grid[row][column] !== "0" && this.grid[row + 1][column] === "0") {
-                        return "chip in the air";
-                    }
-                }
 
-                /*if(numberAiMoves + 1 !== numberHumanMoves) {
-                    return "Invalid token number";
-                }*/
-            }
-
-            // make play the AI
-            let bestMove = this.minMaxInit(6);
-
-            return bestMove[0] + 1;
+        this.grid = lastGrid;
+        if (GridChecker.checkDraw(this.grid)) {
+            return "Draw";
         }
+        for (let column = 0; column < width; column++) {
+            for (let row = 0; row < height; row++) {
+                if (GridChecker.isGameOver(this.grid, row, column, "h")) {
+                    return "Human wins";
+                }
+                if (GridChecker.isGameOver(this.grid, row, column, "m")) {
+                    return "Machine wins";
+                }
+                if (row < height - 1 && this.grid[row][column] !== "0" && this.grid[row + 1][column] === "0") {
+                    return "chip in the air";
+                }
+            }
+        }
+        let bestMove = this.minMaxInit(6);
+        return bestMove[0] + 1;
     }
 
     minMaxInit(depth) {
@@ -170,13 +158,13 @@ class AI {
             ["m000", "0m00", "00m0", "000m"],
             ["mm00", "0mm0", "00mm", "m0m0", "0m0m", "m00m"],
             ["0mmm", "m0mm", "mm0m", "mmm0"],
-            //["1111"]
+            //["mmmm"]
         ];
         let knownWinningMoves2 = [
             ["h000", "0h00", "00h0", "000h"],
             ["hh00", "0hh0", "00hh", "h0h0", "0h0h", "h00h"],
             ["0hhh", "h0hh", "hh0h", "hhh0"],
-            //["2222"]
+            //["hhhh"]
         ];
         let score = 0;
 
@@ -253,7 +241,6 @@ class GridMoves {
 
         for (let row = height - 1; row >= 0; row--) {
             if (grid[row][middle] === "0") {
-                //console.log("row middle ", row);
                 moves.push([middle, row]);
                 break;
             }
@@ -280,7 +267,6 @@ class GridMoves {
                 }
             }
         }
-        //console.log("Res possibles moves ", moves);
         return moves;
     }
 }
@@ -380,17 +366,10 @@ class GridChecker {
     }
 }
 
-function printGrid(grid) {
-    for (let i = 0; i < grid.length; i++) {
-        console.log(grid[i].join(""));
-    }
-    console.log();
-}
-
 function stringToGrid(stringGrid) {
     let numberAiMoves = 0;
     let numberHumanMoves = 0;
-    if(stringGrid.length !== 42){
+    if (stringGrid.length !== 42) {
         return "Invalid board size";
     }
     const grid = [];
@@ -400,19 +379,19 @@ function stringToGrid(stringGrid) {
                 grid[j] = [];
             }
             let char = stringGrid[i * height + j];
-            if(char !== "0" && char !== "m" && char !== "h"){
+            if (char !== "0" && char !== "m" && char !== "h") {
                 return "Invalid character";
             }
-            if(char === "m"){
+            if (char === "m") {
                 numberAiMoves++;
             }
-            if(char === "h"){
+            if (char === "h") {
                 numberHumanMoves++;
             }
             grid[j][i] = char;
         }
     }
-    if(numberAiMoves + 1 !== numberHumanMoves){
+    if (numberAiMoves + 1 !== numberHumanMoves) {
         return "Invalid Number of moves";
     }
     const invertedGrid = [];
@@ -421,19 +400,6 @@ function stringToGrid(stringGrid) {
     }
     return invertedGrid;
 }
-
-function gridToString(grid) {
-    let stringGrid = "";
-    for (let i = 0; i < width; i++) {
-        for (let j = 0; j < height; j++) {
-            stringGrid += grid[j][i];
-        }
-    }
-    return stringGrid;
-}
-
-
-
 module.exports = {
     stringToGrid,
     nextMove,
