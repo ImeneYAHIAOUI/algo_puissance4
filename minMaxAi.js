@@ -15,8 +15,6 @@ function nextMove(lastGrid) {
 class AI {
 
     setup(AIplays) {
-        // need to initialize the grid
-        // need to transform it later to improve performance
         this.player = AIplays;
         this.otherPlayer = AIplays === 1 ? 2 : 1;
 
@@ -43,9 +41,6 @@ class AI {
                         return "Draw";
                     }
                 }
-                /*if(numberAiMoves + 1 !== numberHumanMoves) {
-                    return "Invalid token number";
-                }*/
             }
 
             // make play the AI
@@ -63,7 +58,7 @@ class AI {
         let bestMove = null;
         // for each possible move
         for (let move of GridMoves.possibleMoves(this.grid)) {
-            if (Date.now() - this.startTimer < 1900) { // un peu moins de 2 secondes
+            if (Date.now() - this.startTimer < 1950) { // un peu moins de 2 secondes
                 // make a shadow copy of the grid
                 let newGrid = this.grid.map(row => row.slice());
                 newGrid[move[1]][move[0]] = this.player;
