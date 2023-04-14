@@ -42,16 +42,11 @@ class AI {
             // make play the AI
             let bestMove = this.minMaxInit(6);
 
-
-            // need to convert the coordinates to the api coordinates
-            //bestMove = [bestMove[0], height - 1 - bestMove[1]];
-
             return bestMove[0] + 1;
         }
     }
 
     minMaxInit(depth) {
-        console.log("here");
         let alpha = Number.NEGATIVE_INFINITY;
         let beta = Number.POSITIVE_INFINITY;
 
@@ -79,20 +74,6 @@ class AI {
     }
 
     minMax(grid, depth, isMaximizingPlayer, alpha, beta) {
-        let endGame = GridChecker.isGameOver(grid);
-        if (endGame === GridChecker.win) {
-            if (isMaximizingPlayer) {
-                // the player won
-                return Number.NEGATIVE_INFINITY;
-            } else {
-                // the AI won
-                return Number.POSITIVE_INFINITY;
-            }
-        } else if (endGame === GridChecker.draw) {
-            // nobody won
-            return 0;
-        }
-
         if (depth === 0) {
             return this.evaluate(grid, this.player === 1);
         }
@@ -187,11 +168,8 @@ class AI {
         let score = 0;
 
         if (isAiPlayingFirst) {
-            console.log("in If")
             for (let i = 0; i < knownWinningMoves2.length; i++) {
-                console.log("in for")
                 for (let j = 0; j < knownWinningMoves2[i].length; j++) {
-                    console.log("in 2 for")
                     let index = lineOfConnect4.indexOf(knownWinningMoves2[i][j]);
                     if (lineOfConnect4.indexOf("hhhh") !== -1) {
                         score -= 100000;
@@ -289,7 +267,7 @@ class GridMoves {
                 }
             }
         }
-        console.log("Res possibles moves ", moves);
+        //console.log("Res possibles moves ", moves);
         return moves;
     }
 }
@@ -368,7 +346,7 @@ class GridChecker {
 
     static checkDraw(grid) {
         for (let column = 0; column < width; column++) {
-            if (grid[0][column] === 0) {
+            if (grid[0][column] === "0") {
                 return false;
             }
         }
@@ -385,7 +363,6 @@ class GridChecker {
             case GridChecker.checkVertical(grid, row, column, color):
             case GridChecker.checkDiagonalBottomLeftTopRight(grid, row, column, color):
             case GridChecker.checkDiagonalTopRightBottomLeft(grid, row, column, color): {
-                console.log("over")
                 return true;
             }
             default:

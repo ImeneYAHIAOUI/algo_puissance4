@@ -12,6 +12,7 @@ app.get('/move', (req, res) => {
     const board = stringToGrid(boardContent);
     setup(1);
     const move = nextMove(board);
+    console.log(move);
     res.json(move);
 });
 
