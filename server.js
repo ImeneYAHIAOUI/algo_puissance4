@@ -39,7 +39,7 @@ app.get('/move', (req, res) => {
             res.status(422).json({"detail": "Draw"});
             break;
         default:
-            res.status(200).json({"row": move});
+            res.status(200).json({"column": move});
     }
 
 });
