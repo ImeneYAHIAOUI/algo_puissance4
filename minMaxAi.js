@@ -42,7 +42,11 @@ class AI {
                     if (GridChecker.checkDraw(this.grid)) {
                         return "Draw";
                     }
+                    if (row < height-1 && this.grid[row][column] !== "0" && this.grid[row + 1][column] === "0") {
+                        return "chip in the air";
+                    }
                 }
+
                 /*if(numberAiMoves + 1 !== numberHumanMoves) {
                     return "Invalid token number";
                 }*/
@@ -428,24 +432,12 @@ function gridToString(grid) {
     return stringGrid;
 }
 
-function chipInTheAir(grid) {
-    for (let i = 0; i < height-1; i++) {
-        for (let j = 0; j < width; j++) {
-            if (grid[i][j] !== "0" && grid[i+1][j] === "0") {
-
-                return true;
-            }
-        }
-    }
-    return false;
-}
 
 
 module.exports = {
     stringToGrid,
     nextMove,
     setup,
-    chipInTheAir,
 
 };
 

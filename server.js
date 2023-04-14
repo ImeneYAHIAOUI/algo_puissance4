@@ -1,5 +1,5 @@
 const express = require('express');
-const {stringToGrid, setup, nextMove,chipInTheAir} = require('./minMaxAi');
+const {stringToGrid, setup, nextMove} = require('./minMaxAi');
 const app = express();
 const port = 3000;
 
@@ -10,10 +10,6 @@ app.get('/', (req, res) => {
 app.get('/move', (req, res) => {
     const boardContent = req.query.b;
     const board = stringToGrid(boardContent);
-    if (chipInTheAir(board)) {
-        res.status(400).json({"detail": "A chip is in the air"});
-        return;
-    }
     switch (board) {
         case "Invalid Number of moves":
             res.status(400).json({"detail": "Invalid number of moves"});
@@ -23,6 +19,9 @@ app.get('/move', (req, res) => {
             return;
         case "Invalid character":
             res.status(400).json({"detail": "Invalid character"});
+            return;
+        case "chip in the air":
+            res.status(400).json({"detail": "A chip is in the air"});
             return;
         default:
             break;

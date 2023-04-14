@@ -1,1 +1,1 @@
-docker run -d -p 3000:3000 nodejs-connectfour
+docker run -d --name connect-four -p 3000:3000 nodejs-connectfour
