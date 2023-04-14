@@ -34,10 +34,13 @@ class AI {
             for (let column = 0; column < width; column++) {
                 for (let row = 0; row < height; row++) {
                     if (GridChecker.isGameOver(this.grid, row, column, "h")) {
-                        return "Game is over";
+                        return "Human wins";
                     }
                     if (GridChecker.isGameOver(this.grid, row, column, "m")) {
-                        return;
+                        return "Machine wins";
+                    }
+                    if (GridChecker.checkDraw(this.grid)) {
+                        return "Draw";
                     }
                 }
             }
@@ -357,9 +360,6 @@ class GridChecker {
     }
 
     static isGameOver(grid, row, column, color) {
-        if (GridChecker.checkDraw(grid)) {
-            return true;
-        }
         // switch case is faster than if else
         switch (true) {
             case GridChecker.checkHorizontal(grid, row, column, color):
