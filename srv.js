@@ -1,5 +1,5 @@
 const express = require('express');
-const {stringToGrid, setup, nextMove} = require('./minMaxAi');
+const {stringToGrid, setup, nextMove,chipInTheAir} = require('./minMaxAi');
 const app = express();
 const port = 3000;
 
@@ -12,6 +12,10 @@ app.get('/move', (req, res) => {
     const board = stringToGrid(boardContent);
     if (board.length === 0) {
         res.status(400).json({"detail": "Invalid board size"});
+        return;
+    }
+    if (chipInTheAir(board)) {
+        res.status(400).json({"detail": "A chip is in the air"});
         return;
     }
     setup(1);

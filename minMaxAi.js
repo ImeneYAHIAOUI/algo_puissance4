@@ -411,10 +411,24 @@ function gridToString(grid) {
     return stringGrid;
 }
 
+function chipInTheAir(grid) {
+    for (let i = 0; i < height-1; i++) {
+        for (let j = 0; j < width; j++) {
+            if (grid[i][j] !== "0" && grid[i+1][j] === "0") {
+
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+
 module.exports = {
     stringToGrid,
     nextMove,
     setup,
+    chipInTheAir,
 
 };
 
