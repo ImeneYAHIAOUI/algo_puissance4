@@ -34,7 +34,7 @@ class AI {
             for (let column = 0; column < width; column++) {
                 for (let row = 0; row < height; row++) {
                     if (GridChecker.isGameOver(this.grid, row, column, "h")) {
-                        return;
+                        return "Game is over";
                     }
                 }
             }

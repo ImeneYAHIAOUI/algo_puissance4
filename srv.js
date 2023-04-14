@@ -12,8 +12,11 @@ app.get('/move', (req, res) => {
     const board = stringToGrid(boardContent);
     setup(1);
     const move = nextMove(board);
-    console.log(move);
-    res.json(move);
+    if (move === "Game is over") {
+        res.status(422).json({ "detail" : "Grid is full" });
+    }
+    var response = { "row" : move };
+    res.status(200).json(response);
 });
 
 app.listen(port, () => {
